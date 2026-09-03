@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Request = require('../models/Request');
 const { shouldBatch } = require('../utils/batching');
+const { buildOptimizedRoute } = require('../utils/routing');
 
 router.post('/', async (req, res) => {
   try {
@@ -50,4 +51,21 @@ router.get('/batch-check', async (req, res) => {
   }
 });
 
+router.post('/optimize-route', async (req, res) => {
+  try {
+    const { runnerLng, runnerLat, requestIds } = req.body;
+    const runnerLoc = [runnerLng, runnerLat];
+
+    const requests = await Request.find({ '_id': { $in: requestIds } });
+
+    if (requests.length !== requestIds.length) {
+      return res.status(404).json({ error: 'One or more requests not found' });
+    }
+
+    const route = buildOptimizedRoute(runnerLoc, requests);
+    res.json({ route });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 module.exports = router;
