@@ -3,6 +3,7 @@ const router = express.Router();
 const Request = require('../models/Request');
 const { shouldBatch } = require('../utils/batching');
 const { buildOptimizedRoute } = require('../utils/routing');
+const { calculatePriority } = require('../utils/priority');
 
 router.post('/', async (req, res) => {
   try {
@@ -64,6 +65,19 @@ router.post('/optimize-route', async (req, res) => {
 
     const route = buildOptimizedRoute(runnerLoc, requests);
     res.json({ route });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+router.get('/prioritized', async (req, res) => {
+  try {
+    const requests = await Request.find({ status: 'pending' });
+    const withPriority = requests.map(r => ({
+      ...r.toObject(),
+      priority: calculatePriority(r)
+    }));
+    withPriority.sort((a, b) => b.priority - a.priority);
+    res.json(withPriority);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
