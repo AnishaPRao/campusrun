@@ -82,4 +82,19 @@ router.get('/prioritized', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+router.patch('/:id/complete', async (req, res) => {
+  try {
+    const updated = await Request.findByIdAndUpdate(
+      req.params.id,
+      { status: 'completed' },
+      { new: true }
+    );
+    if (!updated) {
+      return res.status(404).json({ error: 'Request not found' });
+    }
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 module.exports = router;

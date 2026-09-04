@@ -54,8 +54,8 @@ function RunnerDashboard() {
   };
 
   return (
-    <div>
-      <h2>Runner Dashboard</h2>
+  <div className="card">
+    <h2>Runner Dashboard</h2>
 
       <p>Click on the map to set your current location:</p>
       <MapContainer center={[17.3850, 78.4867]} zoom={15} style={{ height: '300px', width: '100%' }}>

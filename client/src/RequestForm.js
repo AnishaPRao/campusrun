@@ -47,7 +47,7 @@ function RequestForm() {
   };
 
   return (
-    <div>
+  <div className="card">
       <MapView
   mode={mode}
   onPickupSet={handlePickupSet}
