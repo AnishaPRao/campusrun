@@ -7,6 +7,7 @@ function RequestForm() {
   const [pickup, setPickup] = useState(null);
   const [drop, setDrop] = useState(null);
   const [mode, setMode] = useState('pickup');
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const handlePickupSet = (lng, lat) => {
     setPickup([lng, lat]);
@@ -34,6 +35,7 @@ function RequestForm() {
       });
       console.log('Request created:', response.data);
       alert('Request submitted successfully!');
+      setRefreshTrigger(prev => prev + 1);
       setItem('');
       setPickup(null);
       setDrop(null);
@@ -47,12 +49,13 @@ function RequestForm() {
   return (
     <div>
       <MapView
-        mode={mode}
-        onPickupSet={handlePickupSet}
-        onDropSet={handleDropSet}
-        pickupMarker={pickup}
-        dropMarker={drop}
-      />
+  mode={mode}
+  onPickupSet={handlePickupSet}
+  onDropSet={handleDropSet}
+  pickupMarker={pickup}
+  dropMarker={drop}
+  refreshTrigger={refreshTrigger}
+/>
 
       <p>Currently selecting: <strong>{mode}</strong></p>
 
