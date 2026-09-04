@@ -29,6 +29,17 @@ function RunnerDashboard() {
       prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
     );
   };
+  const handleMarkComplete = async (requestId, stopIndex) => {
+  try {
+    await axios.patch(`http://localhost:5000/api/requests/${requestId}/complete`);
+    const updatedRoute = [...route];
+    updatedRoute[stopIndex].completed = true;
+    setRoute(updatedRoute);
+  } catch (err) {
+    console.error('Error marking complete:', err);
+    alert('Something went wrong.');
+  }
+};
 
   const handleOptimize = async () => {
     if (!runnerLocation) {
@@ -86,17 +97,22 @@ function RunnerDashboard() {
       <button onClick={handleOptimize}>Optimize Route</button>
 
       {route && (
-        <div>
-          <h3>Optimized Route:</h3>
-          <ol>
-            {route.map((stop, index) => (
-              <li key={index}>
-                {stop.type === 'pickup' ? 'Pick up' : 'Drop off'} request #{stop.requestIndex + 1}
-              </li>
-            ))}
-          </ol>
-        </div>
-      )}
+  <div>
+    <h3>Optimized Route:</h3>
+    <ol>
+      {route.map((stop, index) => (
+        <li key={index} style={{ textDecoration: stop.completed ? 'line-through' : 'none' }}>
+          {stop.type === 'pickup' ? 'Pick up' : 'Drop off'} request #{stop.requestIndex + 1}
+          {!stop.completed && (
+            <button onClick={() => handleMarkComplete(selectedIds[stop.requestIndex], index)}>
+              Mark Complete
+            </button>
+          )}
+        </li>
+      ))}
+    </ol>
+  </div>
+)}
     </div>
   );
 }
