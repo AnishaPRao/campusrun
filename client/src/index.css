@@ -1,13 +1,42 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --bg-dark: #0d0f1a;
+  --card-bg: #161927;
+  --card-header-bg: #1f2336;
+  --border-subtle: #262a3d;
+  --accent-purple: #8b5cf6;
+  --accent-purple-hover: #7c3aed;
+  --accent-purple-light: rgba(139, 92, 246, 0.15);
+  --accent-green: #4ade80;
+  --accent-green-bg: rgba(74, 222, 128, 0.12);
+  --accent-amber: #facc15;
+  --accent-amber-bg: rgba(250, 204, 21, 0.12);
+  --text-white: #ffffff;
+  --text-gray: #9ca3af;
+  --text-muted: #6b7280;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --card-radius: 14px;
+  --input-radius: 8px;
+  --btn-radius: 8px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--bg-dark);
+  background-image: radial-gradient(circle at 10% 0%, rgba(139, 92, 246, 0.15) 0%, rgba(26, 18, 51, 0.35) 30%, rgba(13, 15, 26, 1) 70%);
+  background-attachment: fixed;
+  color: var(--text-gray);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+code, kbd, samp {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 }

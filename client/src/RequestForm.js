@@ -47,25 +47,36 @@ function RequestForm() {
   };
 
   return (
-  <div className="card">
-      <MapView
-  mode={mode}
-  onPickupSet={handlePickupSet}
-  onDropSet={handleDropSet}
-  pickupMarker={pickup}
-  dropMarker={drop}
-  refreshTrigger={refreshTrigger}
-/>
+    <div className="card">
+      <h2>Post Delivery Request</h2>
+      <p style={{ marginTop: '-4px', marginBottom: '14px' }}>
+        Select your pickup and drop locations on the campus map below.
+      </p>
 
-      <p>Currently selecting: <strong>{mode}</strong></p>
+      <MapView
+        mode={mode}
+        onPickupSet={handlePickupSet}
+        onDropSet={handleDropSet}
+        pickupMarker={pickup}
+        dropMarker={drop}
+        refreshTrigger={refreshTrigger}
+      />
+
+      <div className="mode-banner">
+        <span>Currently selecting location:</span>
+        <span className={`mode-pill ${mode}`}>{mode === 'pickup' ? 'Pickup Location' : 'Drop-off Location'}</span>
+      </div>
 
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="What do you need delivered?"
-          value={item}
-          onChange={(e) => setItem(e.target.value)}
-        />
+        <div className="form-group">
+          <label className="form-label">Parcel / Item Details</label>
+          <input
+            type="text"
+            placeholder="What do you need delivered?"
+            value={item}
+            onChange={(e) => setItem(e.target.value)}
+          />
+        </div>
         <button type="submit">Submit Request</button>
       </form>
     </div>

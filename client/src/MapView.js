@@ -47,20 +47,22 @@ function MapView({ onPickupSet, onDropSet, mode, pickupMarker, dropMarker, refre
   };
 
   return (
-    <MapContainer center={[17.3850, 78.4867]} zoom={15} style={{ height: '400px', width: '100%' }}>
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; OpenStreetMap contributors'
-      />
-      <LocationPicker onPickupSet={onPickupSet} onDropSet={onDropSet} mode={mode} onMapMove={handleMapMove} />
-      {pickupMarker && <Marker position={[pickupMarker[1], pickupMarker[0]]} />}
-      {dropMarker && <Marker position={[dropMarker[1], dropMarker[0]]} />}
-      {existingRequests.map(req => (
-        <Marker key={req._id} position={[req.pickup.coordinates[1], req.pickup.coordinates[0]]}>
-          <Popup>{req.item}</Popup>
-        </Marker>
-      ))}
-    </MapContainer>
+    <div className="map-frame">
+      <MapContainer center={[17.3850, 78.4867]} zoom={15} style={{ height: '360px', width: '100%', borderRadius: '10px' }}>
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; OpenStreetMap contributors'
+        />
+        <LocationPicker onPickupSet={onPickupSet} onDropSet={onDropSet} mode={mode} onMapMove={handleMapMove} />
+        {pickupMarker && <Marker position={[pickupMarker[1], pickupMarker[0]]} />}
+        {dropMarker && <Marker position={[dropMarker[1], dropMarker[0]]} />}
+        {existingRequests.map(req => (
+          <Marker key={req._id} position={[req.pickup.coordinates[1], req.pickup.coordinates[0]]}>
+            <Popup>{req.item}</Popup>
+          </Marker>
+        ))}
+      </MapContainer>
+    </div>
   );
 }
 

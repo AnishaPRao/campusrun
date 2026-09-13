@@ -22,22 +22,36 @@ function TrackRequest() {
   return (
     <div className="card">
       <h2>Track My Request</h2>
+      <p style={{ marginTop: '-4px', marginBottom: '14px' }}>
+        Enter your request ID to track live dispatch status.
+      </p>
+
       <form onSubmit={handleTrack}>
-        <input
-          type="text"
-          placeholder="Enter your request ID"
-          value={requestId}
-          onChange={(e) => setRequestId(e.target.value)}
-        />
-        <button type="submit">Track</button>
+        <div className="form-group">
+          <label className="form-label">Request ID</label>
+          <input
+            type="text"
+            placeholder="Enter your request ID"
+            value={requestId}
+            onChange={(e) => setRequestId(e.target.value)}
+          />
+        </div>
+        <button type="submit">Track Request</button>
       </form>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
 
       {result && (
-        <div>
-          <p><strong>Item:</strong> {result.item}</p>
-          <p><strong>Status:</strong> {result.status}</p>
+        <div className="track-result-panel">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+            <span style={{ fontSize: '13px', color: 'var(--text-gray)' }}>Delivery Details</span>
+            <span className={`status-tag ${result.status === 'completed' ? 'green' : 'amber'}`}>
+              {result.status}
+            </span>
+          </div>
+          <p style={{ margin: 0 }}>
+            <strong style={{ color: 'var(--text-white)' }}>Item:</strong> {result.item}
+          </p>
         </div>
       )}
     </div>
